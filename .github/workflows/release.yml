@@ -30,7 +30,7 @@ jobs:
 
       - name: Compile im_switch.cpp
         run: |
-            cl.exe /EHsc /Feim_switch.exe src\im_switch.cpp
+            cl.exe /EHsc /Feim_switch.exe src\im_switch.cpp user32.lib imm32.lib
 
       - name: Create release
         env:
