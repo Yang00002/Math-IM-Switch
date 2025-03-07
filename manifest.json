@@ -1,0 +1,10 @@
+{
+	"id": "math-im-switch",
+	"name": "Math IM Switch",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Auto switch input method when entering or leaving the math equations.",
+	"author": "Yang00002",
+	"authorUrl": "https://github.com/Yang00002",
+	"isDesktopOnly": true
+}
