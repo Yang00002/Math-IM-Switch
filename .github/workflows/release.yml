@@ -36,6 +36,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          tag="${GITHUB_REF#refs/tags/}"
-
+          $tag = "${{ github.ref }}".Replace("refs/tags/", "")
           gh release create "$tag" --title="$tag" --draft main.js manifest.json styles.css im_switch.exe
