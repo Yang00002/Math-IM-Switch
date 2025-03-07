@@ -28,9 +28,9 @@ jobs:
         with:
             arch: x64
 
-      - name: Compile im-switch.cpp
+      - name: Compile im_switch.cpp
         run: |
-            cl.exe /EHsc /Fe im-switch.exe src\im-switch.cpp
+            cl.exe /EHsc /Fe im_switch.exe src\im_switch.cpp
 
       - name: Create release
         env:
@@ -41,4 +41,4 @@ jobs:
           gh release create "$tag" \
             --title="$tag" \
             --draft \
-            main.js manifest.json styles.css im-switch.exe
+            main.js manifest.json styles.css im_switch.exe
