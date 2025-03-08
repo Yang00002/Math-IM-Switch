@@ -4,9 +4,9 @@ import {
 	EditorView,
 	ViewPlugin,
 } from '@codemirror/view';
-import { promisify } from "util";
-import { exec } from "child_process";
 import { syntaxTree } from "@codemirror/language";
+import { promisify } from 'util';
+import { exec } from 'child_process';
 
 interface MIMSPluginSettings {
 	path: string;
@@ -17,17 +17,18 @@ interface MIMSPluginSettings {
 }
 
 const DEFAULT_SETTINGS: MIMSPluginSettings = {
-	path: 'C:\\Users\\Public\\Downloads\\im-select.exe',
+	path: 'C:\\Users\\Public\\Downloads\\im-switch.exe',
 	getPara: 1,
 	setPara: 2,
-	mathCode: 1025,
-	textCode: 0
+	mathCode: 0,
+	textCode: 1025
 }
 
 export default class MIMSPlugin extends Plugin {
 	settings: MIMSPluginSettings;
 
 	async onload() {
+
 		await this.loadSettings();
 
 		this.addSettingTab(new MIMSSettingTab(this.app, this));
@@ -78,18 +79,17 @@ function createExtension(settings: MIMSPluginSettings) {
 			}
 		}
 
-		private async toTextIM(): Promise<string> {
+		private async toTextIM() {
 			const output = await promisify(exec)(this.textPath);
 			return output.stdout;
 		}
 
-		private async toMathIM(): Promise<string> {
+		private async toMathIM() {
 			const output = await promisify(exec)(this.mathPath);
 			return output.stdout;
 		}
 	};
 }
-
 
 function isInMath(view: EditorView): boolean {
 	const state = view.state;
@@ -139,7 +139,7 @@ class MIMSSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('IM switch path')
-			.setDesc('Path of input method switch program. You need to provide it as the plugin itself can not select input method. Absolute path is preferred. Restart the plungin to apply the change.')
+			.setDesc('Path of input method switch program. You need to provide it as the plugin itself can not select input method. Require Absolute path. Restart the plungin to apply the change.')
 			.addText(text => text
 				.setPlaceholder('path')
 				.setValue(this.plugin.settings.path)
@@ -159,7 +159,7 @@ class MIMSSettingTab extends PluginSettingTab {
 				}));
 		new Setting(containerEl)
 			.setName('SetParameter Code')
-			.setDesc('The code to set current language from your input method. Set 2 for Microsoft Input Method. Set 6 if not work. Restart the plungin to apply the change.')
+			.setDesc('The code to set current language from your input method. Set 2 for Microsoft Input Method. Set 6 if not work(If you set corret IM switch path before). Restart the plungin to apply the change.')
 			.addText(text => text
 				.setPlaceholder('code value')
 				.setValue(this.plugin.settings.setPara.toString())

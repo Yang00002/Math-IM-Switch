@@ -12,3 +12,9 @@ main.js
 data.json
 
 .DS_Store
+
+src/im_switch/.vs/
+
+src/im_switch/im_switch/
+
+src/im_switch/x64/

@@ -22,19 +22,21 @@ jobs:
         run: |
           npm install
           npm run build
-
-      - name: Set up MSVC
+  
+      - name: Set up Visual Studio
         uses: ilammy/msvc-dev-cmd@v1
         with:
-            arch: x64
+          arch: x64
 
-      - name: Compile im_switch.cpp
+      - name: Build Solution
         run: |
-            cl.exe /EHsc /Feim_switch.exe src\im_switch.cpp user32.lib imm32.lib
+          msbuild /p:Configuration=Release /p:Platform=x64 "${{ env.SOLUTION_PATH }}"
+        env:
+            SOLUTION_PATH: src/im_switch/im_switch.sln
 
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           $tag = "${{ github.ref }}".Replace("refs/tags/", "")
-          gh release create "$tag" --title="$tag" --draft main.js manifest.json styles.css im_switch.exe
+          gh release create "$tag" --title="$tag" --draft main.js manifest.json styles.css src/im_switch/x64/Release/im_switch.exe
